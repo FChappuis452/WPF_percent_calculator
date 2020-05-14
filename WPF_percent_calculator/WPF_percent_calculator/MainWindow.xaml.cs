@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,23 +88,34 @@ namespace WPF_percent_calculator
                 case 0:
                     // amount = result/percent
                     amount = result / percent;
-                    AmountTxtBx.Text = amount.ToString();
+                    percent *= 100;
+                    AmountLbl.Content = amount.ToString("C", CultureInfo.CurrentCulture);
+                    PercentLbl.Content = percent + "%";
+                    ResultLbl.Content = result.ToString("C", CultureInfo.CurrentCulture);
                     break;
                 case 1:
                     // percentage = result / amount
                     percent = result / amount;
                     percent *= 100;
-                    PercentTxtBx.Text = percent.ToString() + "%";
+                    AmountLbl.Content = "$" + amount.ToString("C", CultureInfo.CurrentCulture);
+                    PercentLbl.Content = percent.ToString() + "%";
+                    ResultLbl.Content = result.ToString("C", CultureInfo.CurrentCulture);
                     break;
                 case 2:
                     // result = percent * amount
                     result = percent * amount;
-                    ResultTxtBx.Text = result.ToString();
+                    percent *= 100;
+                    AmountLbl.Content = amount.ToString("C", CultureInfo.CurrentCulture);
+                    PercentLbl.Content = percent.ToString() + "%";
+                    ResultLbl.Content = result.ToString("C", CultureInfo.CurrentCulture);
                     break;
                 default: //something's off
                     MessageBox.Show("Something's off, check your input");
                     break;
             }
+            //ClearText(AmountTxtBx);
+            //ClearText(PercentTxtBx);
+            //ClearText(ResultTxtBx);
         }
 
         private double ConvertToDouble(string value)

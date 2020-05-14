@@ -5,11 +5,80 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_percent_calculator"
         mc:Ignorable="d"
-        Title="Percentage Calculator" Height="200" Width="700" 
+        Title="Percentage Calculator" Height="200" Width="800" 
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="HeaderLabel" TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="DemiBold" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="ResultLabel" TargetType="{x:Type Label}">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="0 10 0 10" />
+            <Setter Property="Margin" Value="0 10 0 10" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="Content" Value=""/>
+            <Setter Property="ContentStringFormat" Value="{}{0:C}"/>
+        </Style>
+        <Style x:Key="EntryTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Width" Value="175" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent" />
+
+        </Style>
+        <Style x:Key="Borders" TargetType="{x:Type Border}">
+            <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="DarkGreen" />
+            <Setter Property="Margin" Value="5 0 5 0" />
+            
+        </Style>
+        
+        <Style x:Key="ButtonBorders" BasedOn="{StaticResource Borders}" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="LightGreen" />
+            <Setter Property="BorderThickness" Value="3" />
+            <Setter Property="Margin" Value="5 50 5 50" />
+            
+        </Style>
+        
+        <Style x:Key="Buttons" TargetType="{x:Type Button}">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="LightGreen" />
+            <Setter Property="Height" Value="75"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Margin" Value="5 0 5 0" />
+            <Setter Property="FontFamily" Value="Showcard Gothic" />
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    
+                    <Setter Property="Background" Value="DarkGreen"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,77 +87,85 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
-        <Label Content="Amount"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Bottom"
+
+        <Label Style="{StaticResource HeaderLabel}"
+               Content="Amount"
                Grid.Row="0"
                Grid.Column="0"
-               Margin="5 0 0 0"
                />
-        <Label Content="Percentage" 
-               HorizontalAlignment="left"
-               VerticalAlignment="Bottom"
+        <Label Style="{StaticResource HeaderLabel}"
+               Content="Percentage" 
                Grid.Row="0"
                Grid.Column="1"
-               Margin="5 0 0 0"/>
-        <Label Content="Result"
-               Margin="5 0 0 0"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Bottom"
+               />
+        <Label Style="{StaticResource HeaderLabel}"
+               Content="Result"
                Grid.Row="0"
                Grid.Column="2"/>
-   
-        <TextBox x:Name="AmountTxtBx"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 Margin="10 0 0 0"
-                 Height="23"  
-                 TextWrapping="Wrap" 
-                 Text="Enter $ amount ie 1000.50" 
-                 Width="150"
-                 Grid.Row="1"
-                 Grid.Column="0" 
-                 Opacity="0.5" 
-                 GotFocus="AmountTxtBx_GotFocus" FontStyle="Italic" 
-                 />
+
+
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0 0 0 10">
+            <Border Style="{StaticResource Borders}">
+                <TextBox Style="{StaticResource EntryTextBox}"
+                         x:Name="AmountTxtBx"
+                         Text="Enter $ amount ie 1000.50" 
+                         Opacity="0.5" 
+                         GotFocus="AmountTxtBx_GotFocus" 
+                         FontStyle="Italic" 
+                         />
+            </Border>
+            <Label Style="{StaticResource ResultLabel}"
+                    x:Name="AmountLbl"
+                    />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="10 0 0 0">
+            <Border Style="{StaticResource Borders}">
+                <TextBox Style="{StaticResource EntryTextBox}"
+                         x:Name="PercentTxtBx" 
+                         Text="Enter % ie 20.5" 
+                         Opacity="0.5" 
+                         FontStyle="Italic" 
+                         GotFocus="Percent_GotFocus"/>
+            </Border>
+            <Label Style="{StaticResource ResultLabel}"
+                   x:Name="PercentLbl"
+                   />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Grid.Column="2"
+                    Margin="10 0 0 0">
+            <Border Style="{StaticResource Borders}">
+                <TextBox Style="{StaticResource EntryTextBox}" 
+                         x:Name="ResultTxtBx" 
+                         Text="Enter Result ie 100" 
+                         Opacity="0.5" 
+                         FontStyle="Italic" 
+                         GotFocus="ResultTxtBx_GotFocus"/>
+            </Border>
+            <Label Style="{StaticResource ResultLabel}"
+                   x:Name="ResultLbl"
+                   />
+        </StackPanel>
+
+        <!--<Border Style="{StaticResource ButtonBorders}"
+                Grid.Row="0"
+                Grid.Column="4"
+                Grid.RowSpan="2" >-->
         
-        <TextBox x:Name="PercentTxtBx" 
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 Margin="10 0 0 0"
-                 Height="23"  
-                 Width="150"
-                 TextWrapping="Wrap" 
-                 Text="Enter % ie 20.5" 
-                 Grid.Row="1"
-                 Grid.Column="1" 
-                 Opacity="0.5" 
-                 FontStyle="Italic" GotFocus="Percent_GotFocus"/>
-        
-        <TextBox x:Name="ResultTxtBx" 
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 Margin="10 0 0 0"
-                 Height="23"
-                 TextWrapping="Wrap" 
-                 Text="Enter Result ie 100" 
-                 Width="150"
-                 Grid.Row="1"
-                 Grid.Column="2" 
-                 Opacity="0.5" 
-                 FontStyle="Italic" GotFocus="ResultTxtBx_GotFocus"/>
-        
-        <Button x:Name="CalculateBtn"
+            <Button Style="{StaticResource Buttons}" 
+                x:Name="CalculateBtn"
                 Content="Calculate" 
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Width="100"
-                Height="100"
                 Grid.Row="0"
                 Grid.Column="4"
                 Grid.RowSpan="2" 
                 Click="CalculateBtn_Click"
                 />
+        <!--</Border>-->
     </Grid>
 </Window>
