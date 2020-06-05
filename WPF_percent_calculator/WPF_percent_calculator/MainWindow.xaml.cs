@@ -97,7 +97,7 @@ namespace WPF_percent_calculator
                     // percentage = result / amount
                     percent = result / amount;
                     percent *= 100;
-                    AmountLbl.Content = "$" + amount.ToString("C", CultureInfo.CurrentCulture);
+                    AmountLbl.Content = amount.ToString("C", CultureInfo.CurrentCulture);
                     PercentLbl.Content = percent.ToString() + "%";
                     ResultLbl.Content = result.ToString("C", CultureInfo.CurrentCulture);
                     break;
@@ -113,9 +113,7 @@ namespace WPF_percent_calculator
                     MessageBox.Show("Something's off, check your input");
                     break;
             }
-            //ClearText(AmountTxtBx);
-            //ClearText(PercentTxtBx);
-            //ClearText(ResultTxtBx);
+
         }
 
         private double ConvertToDouble(string value)
